@@ -4,12 +4,17 @@ import fetchPage from "@/utils/fetch-page";
 
 export default function Home() {
   const [text, setText] = useState("");
+
+  const handelFetch = async () => {
+    const pageText = await fetchPage();
+    setText(pageText);
+  }
   return (
     <div className="">
       <main className="flex flex-col">
         <button
           className="bg-slate-200 text-xl p-5 hover:bg-slate-300 active:bg-slate-400"
-          onClick={() => setText(fetchPage())}
+          onClick={() => handelFetch()}
         >
           Fetch Wikipeida Page
         </button>
