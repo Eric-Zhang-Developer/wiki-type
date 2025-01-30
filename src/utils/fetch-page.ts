@@ -5,7 +5,9 @@ export default async function fetchPage(): Promise<string>{
   try {
     const response = await axios.get(API_URL);
     console.log("Data", response.data);
-    return JSON.stringify(response.data);
+    const page_id = Object.keys(response.data.query.pages)[0];
+    console.log(page_id);
+    return JSON.stringify(response.data.query.pages[page_id].extract);
   } 
 
   catch (error) {
