@@ -1,14 +1,16 @@
 "use client";
 import { useState } from "react";
 import fetchPage from "@/utils/fetch-page";
+import cleanString from "@/utils/clean-text";
 
 export default function Home() {
   const [text, setText] = useState("");
 
   const handelFetch = async () => {
     const pageText = await fetchPage();
-    setText(pageText);
+    setText(cleanString(pageText));
   }
+  
   return (
     <div className="">
       <main className="flex flex-col">
