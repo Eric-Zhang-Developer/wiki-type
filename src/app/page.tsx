@@ -2,6 +2,7 @@
 import { useState } from "react";
 import fetchPage from "@/utils/fetch-page";
 import cleanString from "@/utils/clean-text";
+import { RotateCcw } from 'lucide-react';
 
 export default function Home() {
   const [text, setText] = useState("Placeholder Text");
@@ -20,7 +21,7 @@ export default function Home() {
           w-3/4 lg:w-2/4 font-serif"
           onClick={() => handelFetch()}
         >
-          Fetch Wikipeida Page
+          Fetch Wikipeida Page <RotateCcw></RotateCcw>
         </button>
         <p className="bg-slate-900 text-slate-200 text-center p-4">{text}</p>
       </main>
