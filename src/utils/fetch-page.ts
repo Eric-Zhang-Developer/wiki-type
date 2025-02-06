@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export default async function fetchPage(): Promise<string>{
-  const API_URL = "https://en.wikipedia.org/w/api.php?action=query&generator=random&grnnamespace=0&prop=extracts&explaintext=1&format=json&origin=*";
+  const API_URL = "https://en.wikipedia.org/w/api.php?action=query&generator=random&grnnamespace=0&prop=extracts&exintro=1&explaintext=1&format=json&origin=*";
   try {
     const response = await axios.get(API_URL);
     console.log("Data", response.data);
