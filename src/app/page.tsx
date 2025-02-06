@@ -24,6 +24,13 @@ export default function Home() {
           Fetch Wikipeida Page <RotateCcw></RotateCcw>
         </button>
         <p className="bg-slate-900 text-slate-200 text-center p-4">{text}</p>
+
+        <div>
+          <input
+            className=""
+          />
+        </div>
+
       </main>
     </div>
   );
