@@ -7,9 +7,10 @@ export default function Home() {
   const [testText, setTestText] = useState("Placeholder Text");
   const [userText, setUserText] = useState("");
 
-  const handelFetch = async () => {
+  const handelReset = async () => {
     const pageText = await fetchPage();
     setTestText(cleanString(pageText));
+    setUserText("");
   };
 
   return (
@@ -20,7 +21,7 @@ export default function Home() {
           py-3 px-4 mr-4 rounded-lg shadow-md flex justify-center items-center gap-2
           transition hover:shadow-xl hover:bg-emerald-500 hover:scale-105
           w-3/4 lg:w-2/4 font-serif"
-          onClick={() => handelFetch()}
+          onClick={() => handelReset()}
         >
           Fetch Wikipeida Page <RotateCcw></RotateCcw>
         </button>
