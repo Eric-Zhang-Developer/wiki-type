@@ -2,15 +2,16 @@
 import { useState } from "react";
 import fetchPage from "@/utils/fetch-page";
 import cleanString from "@/utils/clean-text";
-import { RotateCcw } from 'lucide-react';
-
+import { RotateCcw } from "lucide-react";
 export default function Home() {
-  const [text, setText] = useState("Placeholder Text");
+  const [testText, setTestText] = useState("Placeholder Text");
+  const [userText, setUserText] = useState("");
 
   const handelFetch = async () => {
     const pageText = await fetchPage();
-    setText(cleanString(pageText));
+    setTestText(cleanString(pageText));
   };
+
   return (
     <div className="">
       <main className="flex flex-col items-center gap-8">
@@ -23,14 +24,36 @@ export default function Home() {
         >
           Fetch Wikipeida Page <RotateCcw></RotateCcw>
         </button>
-        <p className="bg-slate-900 text-slate-200 text-center p-4">{text}</p>
+        <p className="bg-slate-900 text-slate-200 text-center p-4">
+          {testText}
+        </p>
+
+        <div>
+          {testText.split("").map((letter, index) =>
+            index >= userText.length ? (
+              <span key={index} className="text-slate-200">
+                {letter}
+              </span>
+            ) : letter === userText[index] ? (
+              <span key={index} className="text-emerald-500">
+                {letter}
+              </span>
+            ) : (
+              <span key={index} className="text-rose-500">
+                {letter}
+              </span>
+            )
+          )}
+        </div>
 
         <div>
           <input
             className=""
+            type="text"
+            value={userText}
+            onChange={(event) => setUserText(event.target.value)}
           />
         </div>
-
       </main>
     </div>
   );
