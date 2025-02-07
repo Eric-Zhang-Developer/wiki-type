@@ -25,22 +25,18 @@ export default function Home() {
         >
           Fetch Wikipeida Page <RotateCcw></RotateCcw>
         </button>
-        <p className="bg-slate-900 text-slate-200 text-center p-4">
-          {testText}
-        </p>
-
-        <div>
+        <div className="text-3xl container mx-auto">
           {testText.split("").map((letter, index) =>
             index >= userText.length ? (
-              <span key={index} className="text-slate-200">
+              <span key={index} className="text-slate-500">
                 {letter}
               </span>
             ) : letter === userText[index] ? (
-              <span key={index} className="text-emerald-500">
+              <span key={index} className="text-slate-200">
                 {letter}
               </span>
             ) : (
-              <span key={index} className="text-rose-500">
+              <span key={index} className="text-rose-300">
                 {letter}
               </span>
             )
