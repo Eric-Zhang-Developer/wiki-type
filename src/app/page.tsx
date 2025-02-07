@@ -25,7 +25,13 @@ export default function Home() {
         >
           Fetch Wikipeida Page <RotateCcw></RotateCcw>
         </button>
-        <div className="text-3xl container mx-auto">
+        <div className="text-3xl container mx-auto relative">
+          <input
+              className="absolute w-full h-full opacity-0"
+              type="text"
+              value={userText}
+              onChange={(event) => setUserText(event.target.value)}
+            />
           {testText.split("").map((letter, index) =>
             index >= userText.length ? (
               <span key={index} className="text-slate-500">
@@ -43,14 +49,9 @@ export default function Home() {
           )}
         </div>
 
-        <div>
-          <input
-            className=""
-            type="text"
-            value={userText}
-            onChange={(event) => setUserText(event.target.value)}
-          />
-        </div>
+
+
+
       </main>
     </div>
   );
