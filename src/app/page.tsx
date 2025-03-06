@@ -17,22 +17,23 @@ export default function Home() {
     setIncorrectChars(0);
   };
 
+  /**
+   * Tracks typing accuracy by comparing user input with test text.
+   * Increments/decrements correct and incorrect character counts as user types or deletes.
+   */
   const handleUserInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newText = event.target.value;
     const newIndex = newText.length - 1;
     if (newText.length > userText.length) {
       if (newText[newIndex] === testText[newIndex]) {
         setCorrectChars((prev) => prev + 1);
-      }
-      else{
+      } else {
         setIncorrectChars((prev) => prev + 1);
       }
-    }
-    else {
-      if (userText[newIndex+1] === testText[newIndex+1]) {
+    } else {
+      if (userText[newIndex + 1] === testText[newIndex + 1]) {
         setCorrectChars((prev) => prev - 1);
-      }
-      else{
+      } else {
         setIncorrectChars((prev) => prev - 1);
       }
     }
