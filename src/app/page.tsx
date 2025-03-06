@@ -7,30 +7,39 @@ export default function Home() {
   const [testText, setTestText] = useState("Placeholder Text");
   const [userText, setUserText] = useState("");
   const [correctChars, setCorrectChars] = useState(0);
+  const [incorrectChars, setIncorrectChars] = useState(0);
 
   const handelReset = async () => {
     const pageText = await fetchPage();
     setTestText(cleanString(pageText));
     setUserText("");
     setCorrectChars(0);
+    setIncorrectChars(0);
   };
 
   const handleUserInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-    // To do: Add incorrect check for characters 
-    // This will need me to aslo check when removing 
     const newText = event.target.value;
-    // User is adding a character 
+    const newIndex = newText.length - 1;
     if (newText.length > userText.length) {
-      const newIndex = newText.length - 1;
       if (newText[newIndex] === testText[newIndex]) {
         setCorrectChars((prev) => prev + 1);
       }
+      else{
+        setIncorrectChars((prev) => prev + 1);
+      }
     }
-    // other case user removes
     else {
-      setCorrectChars((prev) => prev - 1);
+      // To-do fix bug with counting 
+      // I think it has to do with the indexing 
+      console.log(userText[newIndex+1])
+      console.log(testText[newIndex+1])
+      if (userText[newIndex] === testText[newIndex]) {
+        setCorrectChars((prev) => prev - 1);
+      }
+      else{
+        setIncorrectChars((prev) => prev - 1);
+      }
     }
-
     setUserText(newText);
   };
 
@@ -71,6 +80,9 @@ export default function Home() {
         </div>
         <div className="mt-4 text-emerald-300 ">
           Correct characters: {correctChars}
+        </div>
+        <div className="mt-4 text-red-400 ">
+          Incorrect characters: {incorrectChars}
         </div>
       </main>
     </div>
