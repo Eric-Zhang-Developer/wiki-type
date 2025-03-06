@@ -3,7 +3,6 @@ import { useEffect, useState, useRef } from "react";
 import fetchPage from "@/utils/fetch-page";
 import cleanString from "@/utils/clean-text";
 import { RotateCcw } from "lucide-react";
-import { clearInterval } from "timers";
 export default function Home() {
   const [testText, setTestText] = useState("Placeholder Text");
   const [userText, setUserText] = useState("");
