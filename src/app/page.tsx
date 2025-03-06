@@ -59,21 +59,33 @@ export default function Home() {
             value={userText}
             onChange={handleUserInput}
           />
-          {testText.split("").map((letter, index) =>
-            index >= userText.length ? (
-              <span key={index} className="text-slate-500">
+
+          {/* This code is currently terribly inefficent it has to run O(n) everytime a char is inputted*/}
+          {testText.split("").map((letter, index) => {
+            let textColorClass = "";
+            if (index >= userText.length) {
+              textColorClass = "text-slate-500"; // Untyped character
+            } else if (letter === userText[index]) {
+              textColorClass = "text-slate-200"; // Correctly typed character
+            } else {
+              textColorClass = "text-rose-300"; // Incorrectly typed character
+            }
+            
+            // Then add cursor styling for the current position
+            const isCursorPosition = index === userText.length;
+            const cursorClass = isCursorPosition
+              ? "border-l-2 border-white"
+              : "";
+
+            return (
+              <span
+                key={index}
+                className={`${textColorClass} ${cursorClass}`}
+              >
                 {letter}
               </span>
-            ) : letter === userText[index] ? (
-              <span key={index} className="text-slate-200">
-                {letter}
-              </span>
-            ) : (
-              <span key={index} className="text-rose-300">
-                {letter}
-              </span>
-            )
-          )}
+            );
+          })}
         </div>
         <div className="mt-4 text-emerald-300 ">
           Correct characters: {correctChars}
