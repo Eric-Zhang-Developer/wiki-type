@@ -6,11 +6,26 @@ import { RotateCcw } from "lucide-react";
 export default function Home() {
   const [testText, setTestText] = useState("Placeholder Text");
   const [userText, setUserText] = useState("");
+  const [correctChars, setCorrectChars] = useState(0);
 
   const handelReset = async () => {
     const pageText = await fetchPage();
     setTestText(cleanString(pageText));
     setUserText("");
+  };
+
+  const handleUserInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newText = event.target.value;
+    // If user is adding a character (not deleting)
+    if (newText.length > userText.length) {
+      // Check if the newest character is correct
+      const newIndex = newText.length - 1;
+      if (newText[newIndex] === testText[newIndex]) {
+        setCorrectChars((prev) => prev + 1);
+      }
+    }
+
+    setUserText(newText);
   };
 
   return (
@@ -27,11 +42,11 @@ export default function Home() {
         </button>
         <div className="text-3xl container mx-auto relative">
           <input
-              className="absolute w-full h-full opacity-0"
-              type="text"
-              value={userText}
-              onChange={(event) => setUserText(event.target.value)}
-            />
+            className="absolute w-full h-full opacity-0"
+            type="text"
+            value={userText}
+            onChange={handleUserInput}
+          />
           {testText.split("").map((letter, index) =>
             index >= userText.length ? (
               <span key={index} className="text-slate-500">
@@ -48,10 +63,9 @@ export default function Home() {
             )
           )}
         </div>
-
-
-
-
+        <div className="mt-4 text-emerald-300 ">
+          Correct characters: {correctChars}
+        </div>
       </main>
     </div>
   );
