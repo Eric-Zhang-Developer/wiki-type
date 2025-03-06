@@ -15,14 +15,19 @@ export default function Home() {
   };
 
   const handleUserInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    // To do: Add incorrect check for characters 
+    // This will need me to aslo check when removing 
     const newText = event.target.value;
-    // If user is adding a character (not deleting)
+    // User is adding a character 
     if (newText.length > userText.length) {
-      // Check if the newest character is correct
       const newIndex = newText.length - 1;
       if (newText[newIndex] === testText[newIndex]) {
         setCorrectChars((prev) => prev + 1);
       }
+    }
+    // other case user removes
+    else {
+      setCorrectChars((prev) => prev - 1);
     }
 
     setUserText(newText);
