@@ -12,6 +12,7 @@ export default function Home() {
     const pageText = await fetchPage();
     setTestText(cleanString(pageText));
     setUserText("");
+    setCorrectChars(0);
   };
 
   const handleUserInput = (event: React.ChangeEvent<HTMLInputElement>) => {
