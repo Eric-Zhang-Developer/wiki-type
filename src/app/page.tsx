@@ -29,11 +29,7 @@ export default function Home() {
       }
     }
     else {
-      // To-do fix bug with counting 
-      // I think it has to do with the indexing 
-      console.log(userText[newIndex+1])
-      console.log(testText[newIndex+1])
-      if (userText[newIndex] === testText[newIndex]) {
+      if (userText[newIndex+1] === testText[newIndex+1]) {
         setCorrectChars((prev) => prev - 1);
       }
       else{
