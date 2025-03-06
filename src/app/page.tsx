@@ -1,13 +1,17 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import fetchPage from "@/utils/fetch-page";
 import cleanString from "@/utils/clean-text";
 import { RotateCcw } from "lucide-react";
+import { clearInterval } from "timers";
 export default function Home() {
   const [testText, setTestText] = useState("Placeholder Text");
   const [userText, setUserText] = useState("");
   const [correctChars, setCorrectChars] = useState(0);
   const [incorrectChars, setIncorrectChars] = useState(0);
+  const [timeLeft, setTimeLeft] = useState(15);
+  const [isRunning, setIsRunning] = useState(false);
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const handelReset = async () => {
     const pageText = await fetchPage();
@@ -15,6 +19,7 @@ export default function Home() {
     setUserText("");
     setCorrectChars(0);
     setIncorrectChars(0);
+    setTimeLeft(15);
   };
 
   /**
@@ -24,6 +29,11 @@ export default function Home() {
   const handleUserInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newText = event.target.value;
     const newIndex = newText.length - 1;
+
+    if (!isRunning) {
+      setIsRunning(true);
+    }
+
     if (newText.length > userText.length) {
       if (newText[newIndex] === testText[newIndex]) {
         setCorrectChars((prev) => prev + 1);
@@ -40,6 +50,22 @@ export default function Home() {
     setUserText(newText);
   };
 
+  // Timer
+  useEffect(() => {
+    // only run if timer is valid and test is running
+    if (timeLeft > 0 && isRunning) {
+      timerRef.current = setInterval(() => {
+        setTimeLeft((prevTime) => prevTime - 1);
+      }, 1000);
+    }
+
+    return () => {
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+      }
+    };
+  }, [isRunning, timeLeft]);
+
   return (
     <div className="">
       <main className="flex flex-col items-center gap-8">
@@ -52,6 +78,15 @@ export default function Home() {
         >
           Fetch Wikipeida Page <RotateCcw></RotateCcw>
         </button>
+        <div
+          className="transform bg-slate-800 text-white text-2xl mt-6
+          py-3 px-4 mr-4 rounded-lg shadow-md flex justify-center items-center gap-2
+          transition hover:shadow-xl 
+          font-serif "
+        >
+          {timeLeft}
+        </div>
+
         <div className="text-3xl container mx-auto relative">
           <input
             className="absolute w-full h-full opacity-0"
@@ -70,7 +105,7 @@ export default function Home() {
             } else {
               textColorClass = "text-rose-300"; // Incorrectly typed character
             }
-            
+
             // Then add cursor styling for the current position
             const isCursorPosition = index === userText.length;
             const cursorClass = isCursorPosition
@@ -78,10 +113,7 @@ export default function Home() {
               : "";
 
             return (
-              <span
-                key={index}
-                className={`${textColorClass} ${cursorClass}`}
-              >
+              <span key={index} className={`${textColorClass} ${cursorClass}`}>
                 {letter}
               </span>
             );
