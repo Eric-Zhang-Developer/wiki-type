@@ -1,5 +1,5 @@
 "use client";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 import fetchPage from "@/utils/fetch-page";
 import cleanString from "@/utils/clean-text";
 import { RotateCcw } from "lucide-react";
@@ -8,9 +8,11 @@ export default function Home() {
   const [testText, setTestText] = useState("Placeholder Text");
   const [userText, setUserText] = useState("");
   const [correctChars, setCorrectChars] = useState(0);
+  const correctCharsRef = useRef(correctChars);
   const [incorrectChars, setIncorrectChars] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
   const [timeLeft, setTimeLeft] = useState(15);
+  const [WPM, setWPM] = useState(0.0);
 
   const handelReset = async () => {
     const pageText = await fetchPage();
@@ -54,7 +56,15 @@ export default function Home() {
     setTimeLeft(timeLeft);
   }, []);
 
-  const handleGameEnd = useCallback(() => {}, []);
+  const handleGameEnd = useCallback(() => {
+    setWPM((correctCharsRef.current / 5) * 4);
+  }, []);
+
+  // This useEffect is for correct chars as correct chars cannot be passed directly
+  // correctChars can only be passed as a reference or the timer 1 sec interval resets every type a correctChar is inputted
+  useEffect(() => {
+    correctCharsRef.current = correctChars;
+  }, [correctChars]);
 
   return (
     <div className="">
@@ -114,6 +124,7 @@ export default function Home() {
         <div className="mt-4 text-red-400 ">
           Incorrect characters: {incorrectChars}
         </div>
+        <div className="mt-4 text-blue-400 ">WPM: {WPM}</div>
       </main>
     </div>
   );
