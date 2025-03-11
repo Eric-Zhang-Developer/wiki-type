@@ -13,6 +13,7 @@ export default function Home() {
   const [isRunning, setIsRunning] = useState(false);
   const [timeLeft, setTimeLeft] = useState(15);
   const [WPM, setWPM] = useState(0.0);
+  const [isGameEnded, setIsGameEnded] = useState(false);
 
   const handelReset = async () => {
     const pageText = await fetchPage();
@@ -22,6 +23,7 @@ export default function Home() {
     setIncorrectChars(0);
     setIsRunning(false);
     setTimeLeft(15);
+    setIsGameEnded(false);
   };
 
   /**
@@ -58,6 +60,7 @@ export default function Home() {
 
   const handleGameEnd = useCallback(() => {
     setWPM((correctCharsRef.current / 5) * 4);
+    setIsGameEnded(true);
   }, []);
 
   // This useEffect is for correct chars as correct chars cannot be passed directly
@@ -76,55 +79,61 @@ export default function Home() {
           w-3/4 lg:w-2/4 font-serif"
           onClick={() => handelReset()}
         >
-          Fetch Wikipeida Page <RotateCcw></RotateCcw>
+          Fetch Wikipedia Page <RotateCcw></RotateCcw>
         </button>
-
-        <Timer
-          isRunning={isRunning}
-          timeLeft={timeLeft}
-          onTimeChange={handleTimeChange}
-          onGameEnd={handleGameEnd}
-        ></Timer>
-
-        <div className="text-3xl container mx-auto relative">
-          <input
-            className="absolute w-full h-full opacity-0"
-            type="text"
-            value={userText}
-            onChange={handleUserInput}
-          />
-
-          {/* This code is currently terribly inefficent it has to run O(n) everytime a char is inputted*/}
-          {testText.split("").map((letter, index) => {
-            let textColorClass = "";
-            if (index >= userText.length) {
-              textColorClass = "text-slate-500"; // Untyped character
-            } else if (letter === userText[index]) {
-              textColorClass = "text-slate-200"; // Correctly typed character
-            } else {
-              textColorClass = "text-rose-300"; // Incorrectly typed character
-            }
-
-            // Then add cursor styling for the current position
-            const isCursorPosition = index === userText.length;
-            const cursorClass = isCursorPosition
-              ? "border-l-2 border-white"
-              : "";
-
-            return (
-              <span key={index} className={`${textColorClass} ${cursorClass}`}>
-                {letter}
-              </span>
-            );
-          })}
-        </div>
-        <div className="mt-4 text-emerald-300 ">
-          Correct characters: {correctChars}
-        </div>
-        <div className="mt-4 text-red-400 ">
-          Incorrect characters: {incorrectChars}
-        </div>
-        <div className="mt-4 text-blue-400 ">WPM: {WPM}</div>
+  
+        {!isGameEnded ? (
+          <section>
+            <Timer
+              isRunning={isRunning}
+              timeLeft={timeLeft}
+              onTimeChange={handleTimeChange}
+              onGameEnd={handleGameEnd}
+            />
+  
+            <div className="text-3xl container mx-auto relative">
+              <input
+                className="absolute w-full h-full opacity-0"
+                type="text"
+                value={userText}
+                onChange={handleUserInput}
+              />
+  
+              {testText.split("").map((letter, index) => {
+                // Your mapping logic stays the same
+                let textColorClass = "";
+                if (index >= userText.length) {
+                  textColorClass = "text-slate-500"; // Untyped character
+                } else if (letter === userText[index]) {
+                  textColorClass = "text-slate-200"; // Correctly typed character
+                } else {
+                  textColorClass = "text-rose-300"; // Incorrectly typed character
+                }
+  
+                const isCursorPosition = index === userText.length;
+                const cursorClass = isCursorPosition
+                  ? "border-l-2 border-white"
+                  : "";
+  
+                return (
+                  <span key={index} className={`${textColorClass} ${cursorClass}`}>
+                    {letter}
+                  </span>
+                );
+              })}
+            </div>
+          </section>
+        ) : (
+          <section>
+            <div className="mt-4 text-emerald-300">
+              Correct characters: {correctChars}
+            </div>
+            <div className="mt-4 text-red-400">
+              Incorrect characters: {incorrectChars}
+            </div>
+            <div className="mt-4 text-blue-400">WPM: {WPM}</div>
+          </section>
+        )}
       </main>
     </div>
   );
