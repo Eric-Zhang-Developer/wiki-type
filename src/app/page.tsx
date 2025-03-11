@@ -91,7 +91,7 @@ export default function Home() {
               onGameEnd={handleGameEnd}
             />
   
-            <div className="text-3xl container mx-auto relative">
+            <div className="text-3xl container mx-auto relative mt-6">
               <input
                 className="absolute w-full h-full opacity-0"
                 type="text"

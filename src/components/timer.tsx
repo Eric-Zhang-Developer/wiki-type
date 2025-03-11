@@ -13,7 +13,7 @@ export default function Timer({
     // only run if timer is valid and test is running
     if (timeLeft > 0 && isRunning) {
       timerRef.current = setInterval(() => {
-        onTimeChange(timeLeft-1);
+        onTimeChange(timeLeft - 1);
       }, 1000);
     } else if (timeLeft <= 0 && isRunning) {
       onGameEnd();
@@ -24,14 +24,13 @@ export default function Timer({
         clearInterval(timerRef.current);
       }
     };
-  }, [isRunning,timeLeft, onTimeChange, onGameEnd]);
+  }, [isRunning, timeLeft, onTimeChange, onGameEnd]);
 
   return (
     <div
       className="transform bg-slate-800 text-white text-2xl mt-6
-          py-3 px-4 mr-4 rounded-lg shadow-md flex justify-center items-center gap-2
-          transition hover:shadow-xl 
-          font-serif "
+          py-3 px-4 mr-4 rounded-lg shadow-xl flex justify-center items-center
+          transition font-serif w-2/12 lg:w-1/12"
     >
       {timeLeft}
     </div>
