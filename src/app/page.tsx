@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import fetchPage from "@/utils/fetch-page";
 import cleanString from "@/utils/clean-text";
 import { RotateCcw } from "lucide-react";
@@ -50,12 +50,11 @@ export default function Home() {
     setUserText(newText);
   };
 
-  const handleTimeChange = (timeLeft: number) => {
+  const handleTimeChange = useCallback((timeLeft: number) => {
     setTimeLeft(timeLeft);
-  };
+  }, []);
 
-  const handleGameEnd = () => {};
-
+  const handleGameEnd = useCallback(() => {}, []);
 
   return (
     <div className="">

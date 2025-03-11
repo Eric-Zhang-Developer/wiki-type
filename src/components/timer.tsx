@@ -24,7 +24,7 @@ export default function Timer({
         clearInterval(timerRef.current);
       }
     };
-  }, [isRunning, onGameEnd, onTimeChange, timeLeft]);
+  }, [isRunning,timeLeft, onTimeChange, onGameEnd]);
 
   return (
     <div
