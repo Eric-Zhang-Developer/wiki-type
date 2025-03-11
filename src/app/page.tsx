@@ -124,14 +124,18 @@ export default function Home() {
             </div>
           </section>
         ) : (
-          <section>
-            <div className="mt-4 text-emerald-300">
+          <section className="bg-slate-800 text-white text-2xl mt-6
+          py-3 px-4 mr-4 rounded-lg shadow-md flex justify-center items-center gap-2
+          transition hover:shadow-xl flex-col
+          w-3/4 lg:w-2/4 font-serif">
+            <div className="mt-4 text-blue-400 text-3xl">WPM: {WPM}</div>
+            <div className="mt-4 text-emerald-400">
               Correct characters: {correctChars}
             </div>
             <div className="mt-4 text-red-400">
               Incorrect characters: {incorrectChars}
             </div>
-            <div className="mt-4 text-blue-400">WPM: {WPM}</div>
+            
           </section>
         )}
       </main>
