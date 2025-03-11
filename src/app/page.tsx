@@ -1,16 +1,16 @@
 "use client";
-import { useEffect, useState, useRef } from "react";
+import { useState } from "react";
 import fetchPage from "@/utils/fetch-page";
 import cleanString from "@/utils/clean-text";
 import { RotateCcw } from "lucide-react";
+import Timer from "@/components/timer";
 export default function Home() {
   const [testText, setTestText] = useState("Placeholder Text");
   const [userText, setUserText] = useState("");
   const [correctChars, setCorrectChars] = useState(0);
   const [incorrectChars, setIncorrectChars] = useState(0);
-  const [timeLeft, setTimeLeft] = useState(15);
   const [isRunning, setIsRunning] = useState(false);
-  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const [timeLeft, setTimeLeft] = useState(15);
 
   const handelReset = async () => {
     const pageText = await fetchPage();
@@ -18,6 +18,7 @@ export default function Home() {
     setUserText("");
     setCorrectChars(0);
     setIncorrectChars(0);
+    setIsRunning(false);
     setTimeLeft(15);
   };
 
@@ -49,24 +50,12 @@ export default function Home() {
     setUserText(newText);
   };
 
-  // Timer
-  useEffect(() => {
-    // only run if timer is valid and test is running
-    if (timeLeft > 0 && isRunning) {
-      timerRef.current = setInterval(() => {
-        setTimeLeft((prevTime) => prevTime - 1);
-      }, 1000);
-    }
-    else if (timeLeft <= 0 && isRunning){
-      setIsRunning(false);
-    }
+  const handleTimeChange = (timeLeft: number) => {
+    setTimeLeft(timeLeft);
+  };
 
-    return () => {
-      if (timerRef.current) {
-        clearInterval(timerRef.current);
-      }
-    };
-  }, [isRunning, timeLeft]);
+  const handleGameEnd = () => {};
+
 
   return (
     <div className="">
@@ -80,14 +69,13 @@ export default function Home() {
         >
           Fetch Wikipeida Page <RotateCcw></RotateCcw>
         </button>
-        <div
-          className="transform bg-slate-800 text-white text-2xl mt-6
-          py-3 px-4 mr-4 rounded-lg shadow-md flex justify-center items-center gap-2
-          transition hover:shadow-xl 
-          font-serif "
-        >
-          {timeLeft}
-        </div>
+
+        <Timer
+          isRunning={isRunning}
+          timeLeft={timeLeft}
+          onTimeChange={handleTimeChange}
+          onGameEnd={handleGameEnd}
+        ></Timer>
 
         <div className="text-3xl container mx-auto relative">
           <input
