@@ -1,7 +1,7 @@
 
 # WikiType
-
-WikiType is a Wikipedia-based typing game. Type articles, learn stuff, get faster.
+### Type articles, learn stuff, get faster.
+WikiType is a Wikipedia-based typing game. 
 
 
 ## Features
