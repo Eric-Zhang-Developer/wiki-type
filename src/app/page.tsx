@@ -15,7 +15,7 @@ export default function Home() {
   const [WPM, setWPM] = useState(0.0);
   const [isGameEnded, setIsGameEnded] = useState(false);
 
-  const handelReset = async () => {
+  const handleReset = async () => {
     const pageText = await fetchPage();
     setTestText(cleanString(pageText));
     setUserText("");
@@ -77,7 +77,7 @@ export default function Home() {
           py-3 px-4 mr-4 rounded-lg shadow-md flex justify-center items-center gap-2
           transition hover:shadow-xl hover:bg-emerald-500 hover:scale-105
           w-3/4 lg:w-2/4 font-serif"
-          onClick={() => handelReset()}
+          onClick={() => handleReset()}
         >
           Fetch Wikipedia Page <RotateCcw></RotateCcw>
         </button>
