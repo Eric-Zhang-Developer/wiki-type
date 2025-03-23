@@ -129,6 +129,7 @@ export default function Home() {
           transition hover:shadow-xl flex-col
           w-3/4 lg:w-2/4 font-serif">
             <div className="mt-4 text-blue-400 text-3xl">WPM: {WPM}</div>
+            <div className="mt-4 text-blue-400 text-2xl">Accuracy: {Math.round((correctChars)/(correctChars+incorrectChars)*100)}%</div>
             <div className="mt-4 text-emerald-400">
               Correct characters: {correctChars}
             </div>
