@@ -14,7 +14,7 @@ export default function Home() {
   const [timeLeft, setTimeLeft] = useState(15);
   const [WPM, setWPM] = useState(0.0);
   const [isGameEnded, setIsGameEnded] = useState(false);
-  const inputRef = useRef(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const handleReset = async () => {
     const pageText = await fetchPage();
@@ -25,8 +25,6 @@ export default function Home() {
     setIsRunning(false);
     setTimeLeft(15);
     setIsGameEnded(false);
-
-    inputRef.current.focus();
   };
 
   /**
@@ -71,6 +69,12 @@ export default function Home() {
   useEffect(() => {
     correctCharsRef.current = correctChars;
   }, [correctChars]);
+
+  useEffect(() => {
+    if (!isGameEnded && inputRef.current){
+      inputRef.current.focus();
+    }
+  }, [isGameEnded, testText])
 
   return (
     <div className="">
