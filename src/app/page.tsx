@@ -16,6 +16,13 @@ export default function Home() {
   const [isGameEnded, setIsGameEnded] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
+  /**
+   * Called when Fetch Wikipedia Page button is pressed
+   * Calls API to get a Wikipedia page
+   * Cleans up raw text
+   * Resets game statistics to defaults 
+   * Sets time allocation (for now a static 15 seconds)
+   */
   const handleReset = async () => {
     const pageText = await fetchPage();
     setTestText(cleanString(pageText));
@@ -55,10 +62,13 @@ export default function Home() {
     setUserText(newText);
   };
 
+
+
   const handleTimeChange = useCallback((timeLeft: number) => {
     setTimeLeft(timeLeft);
   }, []);
 
+  // Calculates WPM with formula  -  (chars typed / 5)  * 4 (which is static rn for 15 sec test if the test was lets say 60 sec it would be 1)
   const handleGameEnd = useCallback(() => {
     setWPM((correctCharsRef.current / 5) * 4);
     setIsGameEnded(true);
@@ -81,6 +91,7 @@ export default function Home() {
   return (
     <div className="">
       <main className="flex flex-col items-center gap-8">
+        {/* Fetch Wikipedia Page */}
         <button
           className="transform bg-slate-800 text-white text-2xl mt-6
           py-3 px-4 mr-4 rounded-lg shadow-md flex justify-center items-center gap-2
@@ -92,6 +103,7 @@ export default function Home() {
         </button>
   
         {!isGameEnded ? (
+          // Main Game Screen
           <section>
             <Timer
               isRunning={isRunning}
@@ -108,7 +120,8 @@ export default function Home() {
                 onChange={handleUserInput}
                 ref={inputRef}
               />
-  
+              
+              {/* Renders each test character with styles for typing accuracy and cursor position */} 
               {testText.split("").map((letter, index) => {
                 let textColorClass = "";
                 if (index >= userText.length) {
@@ -119,6 +132,7 @@ export default function Home() {
                   textColorClass = "text-rose-300"; // Incorrectly typed character
                 }
   
+                // Cursor position 
                 const isCursorPosition = index === userText.length;
                 const cursorClass = isCursorPosition
                   ? "border-l-2 border-white"
@@ -133,6 +147,7 @@ export default function Home() {
             </div>
           </section>
         ) : (
+          // End Screen
           <section className="bg-slate-800 text-white text-2xl mt-6
           py-3 px-4 mr-4 rounded-lg shadow-md flex justify-center items-center gap-2
           transition hover:shadow-xl flex-col
