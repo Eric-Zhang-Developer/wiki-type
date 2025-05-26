@@ -71,7 +71,7 @@ export default function Home() {
   }, [correctChars]);
 
   // useEffect for triggering autofocus
-  // This triggers autofous on the input box when the text or game ends
+  // This triggers autofocus on the input box when the text or game ends
   useEffect(() => {
     if (!isGameEnded && inputRef.current){
       inputRef.current.focus();
