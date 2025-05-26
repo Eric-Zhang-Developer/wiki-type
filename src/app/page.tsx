@@ -14,6 +14,7 @@ export default function Home() {
   const [timeLeft, setTimeLeft] = useState(15);
   const [WPM, setWPM] = useState(0.0);
   const [isGameEnded, setIsGameEnded] = useState(false);
+  const inputRef = useRef(null);
 
   const handleReset = async () => {
     const pageText = await fetchPage();
@@ -24,6 +25,8 @@ export default function Home() {
     setIsRunning(false);
     setTimeLeft(15);
     setIsGameEnded(false);
+
+    inputRef.current.focus();
   };
 
   /**
@@ -97,10 +100,10 @@ export default function Home() {
                 type="text"
                 value={userText}
                 onChange={handleUserInput}
+                ref={inputRef}
               />
   
               {testText.split("").map((letter, index) => {
-                // Your mapping logic stays the same
                 let textColorClass = "";
                 if (index >= userText.length) {
                   textColorClass = "text-slate-500"; // Untyped character
