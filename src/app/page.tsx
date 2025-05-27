@@ -88,6 +88,11 @@ export default function Home() {
     }
   }, [isGameEnded, testText])
 
+  // Initialize typing test on component mount 
+  useEffect(() => {
+    handleReset();
+  }, [])
+
   return (
     <div className="">
       <main className="flex flex-col items-center gap-8">
