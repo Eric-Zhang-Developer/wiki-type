@@ -30,7 +30,7 @@ export default function Home() {
     setCorrectChars(0);
     setIncorrectChars(0);
     setIsRunning(false);
-    setTimeLeft(30);
+    setTimeLeft(15);
     setIsGameEnded(false);
   };
 
