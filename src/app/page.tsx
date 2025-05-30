@@ -30,7 +30,7 @@ export default function Home() {
     setCorrectChars(0);
     setIncorrectChars(0);
     setIsRunning(false);
-    setTimeLeft(15);
+    setTimeLeft(30);
     setIsGameEnded(false);
   };
 
@@ -93,6 +93,12 @@ export default function Home() {
     handleReset();
   }, [])
 
+  useEffect(() => {
+    if (!isGameEnded && userText.length === testText.length){
+      handleGameEnd();
+    }
+  }, [handleGameEnd, isGameEnded, testText.length, userText.length])
+
   return (
     <div className="">
       <main className="flex flex-col items-center gap-8">
@@ -136,7 +142,7 @@ export default function Home() {
                 } else {
                   textColorClass = "text-rose-300"; // Incorrectly typed character
                 }
-  
+
                 // Cursor position 
                 const isCursorPosition = index === userText.length;
                 const cursorClass = isCursorPosition
