@@ -117,7 +117,7 @@ export default function Home() {
           // Main Game Screen
           <section>
             <Timer
-              isRunning={isRunning}
+              isRunning={isRunning && !isGameEnded}
               timeLeft={timeLeft}
               onTimeChange={handleTimeChange}
               onGameEnd={handleGameEnd}
