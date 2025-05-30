@@ -93,6 +93,7 @@ export default function Home() {
     handleReset();
   }, [])
 
+  // Ends game if user reaches the end of the test 
   useEffect(() => {
     if (!isGameEnded && userText.length === testText.length){
       handleGameEnd();
