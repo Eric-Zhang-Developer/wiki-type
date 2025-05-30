@@ -93,6 +93,13 @@ export default function Home() {
     handleReset();
   }, [])
 
+  // Ends game if user reaches the end of the test 
+  useEffect(() => {
+    if (!isGameEnded && userText.length === testText.length){
+      handleGameEnd();
+    }
+  }, [handleGameEnd, isGameEnded, testText.length, userText.length])
+
   return (
     <div className="">
       <main className="flex flex-col items-center gap-8">
@@ -111,7 +118,7 @@ export default function Home() {
           // Main Game Screen
           <section>
             <Timer
-              isRunning={isRunning}
+              isRunning={isRunning && !isGameEnded}
               timeLeft={timeLeft}
               onTimeChange={handleTimeChange}
               onGameEnd={handleGameEnd}
@@ -136,7 +143,7 @@ export default function Home() {
                 } else {
                   textColorClass = "text-rose-300"; // Incorrectly typed character
                 }
-  
+
                 // Cursor position 
                 const isCursorPosition = index === userText.length;
                 const cursorClass = isCursorPosition
